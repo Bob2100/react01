@@ -13,7 +13,11 @@ function Cart(props) {
         {props.cart.map(item => (
           <tr key={item.text}>
             <td>{item.text}</td>
-            <td>{item.count}</td>
+            <td>
+              <button onClick={() => props.minusCount(item)}>-</button>
+              {item.count}
+              <button onClick={() => props.addCount(item)}>+</button>
+            </td>
             <td>{item.count * item.price}</td>
           </tr>
         ))}
@@ -66,6 +70,24 @@ export default class CartSample extends Component {
     });
   }
 
+  addCount = good => {
+    const newCart = [...this.state.cart];
+    const item = newCart.find(item => item.text === good.text);
+    item.count++;
+    this.setState({
+      cart: newCart
+    });
+  }
+
+  minusCount = good => {
+    const newCart = [...this.state.cart];
+    const item = newCart.find(item => item.text === good.text);
+    item.count--
+    this.setState({
+      cart: newCart
+    });
+  }
+
   render() {
     const goods = this.state.goods.map(good => (
       <tr key={good.text}>
@@ -92,7 +114,7 @@ export default class CartSample extends Component {
           </tbody>
         </table>
         <h3>购物车</h3>
-        <Cart cart={this.state.cart} />
+        <Cart cart={this.state.cart} addCount={this.addCount} minusCount={this.minusCount} />
       </div>
     )
   }
