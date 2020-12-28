@@ -1,36 +1,29 @@
 import React, { Component, PureComponent } from 'react'
 
-// function Comment({ data }) {
-//   console.log('render');
-//   return (
-//     <div>
-//       <p>-{data.author}-</p>
-//       <p>{data.body}</p>
-//     </div>
-//   )
-// }
+const Comment = React.memo(({ body, author }) => {
+  console.log('render');
+  return (
+    <div>
+      <p>-{author}-</p>
+      <p>{body}</p>
+    </div>
+  )
+});
 
 // 1. PureComponent要求数据为值类型
 // 2. 引用类型的话地址要相同，且数据只有一层
-class Comment extends PureComponent {
+// class Comment extends PureComponent {
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (nextProps.data.author === this.props.data.author && nextProps.data.body === this.props.data.body) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  render() {
-    console.log('render');
-    return (
-      <div>
-        <p>-{this.props.author}-</p>
-        <p>{this.props.body}</p>
-      </div>
-    )
-  }
-}
+//   render() {
+//     console.log('render');
+//     return (
+//       <div>
+//         <p>-{this.props.author}-</p>
+//         <p>{this.props.body}</p>
+//       </div>
+//     )
+//   }
+// }
 
 
 
