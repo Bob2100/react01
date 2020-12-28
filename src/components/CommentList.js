@@ -11,7 +11,7 @@ import React, { Component, PureComponent } from 'react'
 // }
 
 // 1. PureComponent要求数据为值类型
-// 2. 引用类型的话地址要相同，且数据只有一层
+// 2. 引用类型的话地址要不相同，且数据只有一层
 class Comment extends PureComponent {
 
   // shouldComponentUpdate(nextProps) {
