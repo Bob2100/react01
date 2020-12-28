@@ -25,8 +25,8 @@ class Comment extends PureComponent {
     console.log('render');
     return (
       <div>
-        <p>-{this.props.author}-</p>
-        <p>{this.props.body}</p>
+        <p>-{this.props.data.author}-</p>
+        <p>{this.props.data.body}</p>
       </div>
     )
   }
@@ -44,11 +44,15 @@ export default class CommentList extends Component {
   }
 
   componentDidMount() {
+    const obj1 = { body: 'How are you?', author: 'Bob' };
+    const obj2 = { body: 'Fine', author: 'Jack' };
     setInterval(() => {
+      obj1.body += obj1.body
+      obj2.body += obj2.body
       this.setState({
         comments: [
-          { body: 'How are you?', author: 'Bob' },
-          { body: 'Fine', author: 'Jack' }
+          obj1,
+          obj2
         ]
       });
     }, 1000);
@@ -58,7 +62,7 @@ export default class CommentList extends Component {
     return (
       <div>
         {this.state.comments.map((c, i) => (
-          <Comment key={i} {...c}></Comment>
+          <Comment key={i} data={c}></Comment>
         ))}
       </div>
     )
