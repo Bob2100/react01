@@ -10,7 +10,17 @@ function Course(props) {
 
 // 高阶组件
 const withName = Comp => {
-  return props => <Course {...props} name="React"></Course>
+
+  // 改写组件的生命周期
+  class NewComponent extends Component {
+    componentDidMount() {
+      console.log('do something');
+    }
+    render() {
+      return <Course {...this.props} name="React"></Course>
+    }
+  }
+  return NewComponent
 }
 
 
