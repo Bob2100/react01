@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import icon from './icon.jpg'
 import './App.css'
+import { Button } from 'antd'
 
 // 函数型组件传递props
 function Welcome(props) {
@@ -72,6 +73,7 @@ export default class App extends Component {
 
         {/* 使用状态 */}
         <p>{this.state.date.toLocaleTimeString()}</p>
+        <Button type="primary">点击</Button>
       </div>
     )
   }
