@@ -7,7 +7,7 @@ import { Button } from 'antd'
 function Welcome(props) {
   return (
     <div>
-      <p>Hello, {props.name}</p>
+      <p>Hel lo, {props.name}</p>
     </div>
   )
 }
