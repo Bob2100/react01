@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 
 // function Comment({ data }) {
 //   console.log('render');
@@ -9,21 +9,24 @@ import React, { Component } from 'react'
 //     </div>
 //   )
 // }
-class Comment extends Component {
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.data.author === this.props.data.author && nextProps.data.body === this.props.data.body) {
-      return false;
-    }
-    return true;
-  }
+// 1. PureComponent要求数据为值类型
+// 2. 引用类型的话地址要相同，且数据只有一层
+class Comment extends PureComponent {
+
+  // shouldComponentUpdate(nextProps) {
+  //   if (nextProps.data.author === this.props.data.author && nextProps.data.body === this.props.data.body) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   render() {
     console.log('render');
     return (
       <div>
-        <p>-{this.props.data.author}-</p>
-        <p>{this.props.data.body}</p>
+        <p>-{this.props.author}-</p>
+        <p>{this.props.body}</p>
       </div>
     )
   }
@@ -55,7 +58,7 @@ export default class CommentList extends Component {
     return (
       <div>
         {this.state.comments.map((c, i) => (
-          <Comment key={i} data={c}></Comment>
+          <Comment key={i} {...c}></Comment>
         ))}
       </div>
     )
