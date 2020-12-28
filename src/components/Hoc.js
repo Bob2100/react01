@@ -23,5 +23,10 @@ const withName = Comp => {
   return NewComponent
 }
 
+const withLog = Comp => {
+  console.log(Comp.name + '渲染了');
+  return props => <Comp {...props}></Comp>
+}
 
-export default withName(Course)
+
+export default withLog(withName(Course))
