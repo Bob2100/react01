@@ -1,13 +1,5 @@
 import React, { Component } from 'react'
 
-function Course(props) {
-  return (
-    <div>
-      {props.stage} - {props.name}
-    </div>
-  )
-}
-
 // 高阶组件
 const withName = Comp => {
 
@@ -17,7 +9,7 @@ const withName = Comp => {
       console.log('do something');
     }
     render() {
-      return <Course {...this.props} name="React"></Course>
+      return (<Comp {...this.props} name="React"></Comp>)
     }
   }
   return NewComponent
@@ -28,5 +20,18 @@ const withLog = Comp => {
   return props => <Comp {...props}></Comp>
 }
 
+@withLog
+@withName
+@withLog
+class Course extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.stage} - {this.props.name}
+      </div>
+    )
+  }
 
-export default withLog(withName(Course))
+}
+
+export default Course
