@@ -21,7 +21,7 @@ function kFromCreate(Comp) {
             })
           }
           {
-            this.state[`${fieldName}Message`] && (<p style={{ color: 'red' }}>{this.state[`${fieldName}Message`]}</p>)
+            this.state[`${fieldName}Message`] && (<span style={{ color: 'red' }}>{this.state[`${fieldName}Message`]}</span>)
           }
         </div>
       );
@@ -38,21 +38,26 @@ function kFromCreate(Comp) {
 
     validateField = fieldName => {
       const rules = this.options[fieldName].rules;
-      const hasError = rules.some(rule => {
+      const ruleNames = {
+        required: 'required',
+        min: 'min',
+        max: 'max'
+      };
 
-        const ruleName = Object.keys(rule)[0];
+      const hasError = rules.some(rule => {
+        const ruleName = Object.keys(rule).filter(key => ruleNames.hasOwnProperty(key))[0];
         const ruleValue = rule[ruleName];
         const fieldValue = this.state[fieldName];
         let hasError = false;
 
         switch (ruleName) {
-          case 'required':
+          case ruleNames.required:
             hasError = ruleValue && !fieldValue;
             break;
-          case 'min':
+          case ruleNames.min:
             hasError = fieldValue.length < ruleValue;
             break;
-          case 'max':
+          case ruleNames.max:
             hasError = fieldValue.length > ruleValue;
             break;
         }
@@ -92,9 +97,9 @@ class KFormSample extends Component {
   }
 
   submit = () => {
-    console.log(this.props['value']);
     this.props.validate(success => {
       if (success) {
+        console.log(this.props['value']);
         alert('校验成功，提交登录');
       } else {
         alert('校验失败');
