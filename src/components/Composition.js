@@ -35,6 +35,21 @@ function Fetcher(props) {
   return props.children(user);
 }
 
+function FilterP(props) {
+  return (
+    <div>
+      {
+        React.Children.map(props.children, child => {
+          console.log(child);
+          if (child.type === 'p') {
+            return child;
+          }
+        })
+      }
+    </div>
+  )
+}
+
 
 export default class Composition extends Component {
   render() {
@@ -47,6 +62,15 @@ export default class Composition extends Component {
             ({ username, age }) => (<p>{`${username}-${age}`}</p>)
           }
         </Fetcher>
+        <FilterP>
+          <h1>Hello</h1>
+          <h2>Hello2</h2>
+          <p>React is good</p>
+          <div>
+            haha
+            <p>ppp</p>
+          </div>
+        </FilterP>
       </div>
     )
   }
