@@ -68,6 +68,7 @@ export default class Composition extends Component {
           <p>React is good</p>
           <div>
             haha
+
             <p>ppp</p>
           </div>
         </FilterP>
