@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
 class KFormItem extends Component {
   render() {
@@ -6,6 +7,17 @@ class KFormItem extends Component {
       <div className="form-item">
         {this.props.children}
         {this.props.validateStatus === 'error' && <span style={{ color: 'red' }}>{this.props.help}</span>}
+      </div>
+    )
+  }
+}
+
+class Input extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.prefix}
+        <input {...this.props} />
       </div>
     )
   }
@@ -140,7 +152,7 @@ class KFormSample extends Component {
       <div>
         <KFormItem validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
           {
-            decorateField(<input type="text" />, 'username', {
+            decorateField(<Input type="text" prefix={<UserOutlined />} />, 'username', {
               rules: [
                 { required: true, message: '请输入用户名！' },
                 { min: 3, message: '至少3位' },
@@ -151,7 +163,7 @@ class KFormSample extends Component {
         </KFormItem>
         <KFormItem validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
           {
-            decorateField(<input type="password" />, 'password', {
+            decorateField(<Input type="password" prefix={<LockOutlined />} />, 'password', {
               rules: [
                 { required: true, message: '请输入密码！' },
                 { min: 6, message: '至少6位' },
