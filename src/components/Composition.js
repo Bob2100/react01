@@ -23,12 +23,30 @@ function WelcomeDialog() {
   )
 }
 
+const api = {
+  getUser: () => ({
+    username: 'Bob',
+    age: 18
+  })
+}
+
+function Fetcher(props) {
+  let user = api[props.name]();
+  return props.children(user);
+}
+
 
 export default class Composition extends Component {
   render() {
     return (
       <div>
         <WelcomeDialog></WelcomeDialog>
+        {/* children的内容可以是任意表达式 */}
+        <Fetcher name="getUser">
+          {
+            ({ username, age }) => (<p>{`${username}-${age}`}</p>)
+          }
+        </Fetcher>
       </div>
     )
   }
