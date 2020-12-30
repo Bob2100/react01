@@ -1,16 +1,27 @@
 import React, { Component } from 'react'
-import store from '../store'
+import { connect } from "react-redux";
 
-export default class ReduxTest extends Component {
+const mapStateToProps = state => ({ num: state })
+const mapDispatchToProps = dispatch => ({
+  add: () => dispatch({ type: 'add' }),
+  minus: () => dispatch({ type: 'minus' })
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
+class ReduxTest extends Component {
   render() {
     return (
       <div>
         <p>
-          <button onClick={() => store.dispatch({ type: 'minus' })}>-</button>
-          {store.getState()}
-          <button onClick={() => store.dispatch({ type: 'add' })}>+</button>
+          <button onClick={() => this.props.minus()}>-</button>
+          {this.props.num}
+          <button onClick={() => this.props.add()}>+</button>
         </p>
       </div>
     )
   }
 }
+
+export default ReduxTest
+
+
