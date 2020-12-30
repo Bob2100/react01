@@ -1,5 +1,16 @@
 import React, { Component } from 'react'
 
+class KFormItem extends Component {
+  render() {
+    return (
+      <div className="form-item">
+        {this.props.children}
+        {this.props.validateStatus === 'error' && <span style={{ color: 'red' }}>{this.props.help}</span>}
+      </div>
+    )
+  }
+}
+
 function kFromCreate(Comp) {
   return class extends Component {
 
@@ -17,14 +28,27 @@ function kFromCreate(Comp) {
             React.cloneElement(InputComp, {
               name: fieldName,
               value: this.state[fieldName] || '',
-              onChange: this.changeHandler
+              onChange: this.changeHandler,
+              onFocus: this.focusHandler
             })
-          }
-          {
-            this.state[`${fieldName}Message`] && (<span style={{ color: 'red' }}>{this.state[`${fieldName}Message`]}</span>)
           }
         </div>
       );
+    }
+
+    focusHandler = e => {
+      const fieldName = e.target.name;
+      this.setState({
+        [`${fieldName}Focused`]: true
+      });
+    }
+
+    getFieldError = fieldName => {
+      return this.state[`${fieldName}Message`];
+    }
+
+    isFieldTouched = fieldName => {
+      return !!this.state[`${fieldName}Focused`]
     }
 
     changeHandler = e => {
@@ -82,12 +106,13 @@ function kFromCreate(Comp) {
 
     render() {
       return (
-        <Comp {...this.props} decorateField={this.decorateField} value={this.state} validate={this.validate}></Comp>
+        <Comp {...this.props} decorateField={this.decorateField} value={this.state} validate={this.validate}
+          isFieldTouched={this.isFieldTouched} getFieldError={this.getFieldError}
+        ></Comp>
       )
     }
   }
 }
-
 
 @kFromCreate
 class KFormSample extends Component {
@@ -108,27 +133,34 @@ class KFormSample extends Component {
   }
 
   render() {
-    const { decorateField } = this.props;
+    const { decorateField, isFieldTouched, getFieldError } = this.props;
+    const usernameError = isFieldTouched('username') && getFieldError('username');
+    const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
       <div>
-        {
-          decorateField(<input type="text" />, 'username', {
-            rules: [
-              { required: true, message: '请输入用户名！' },
-              { min: 3, message: '至少3位' },
-              { max: 6, message: '至多6位' }
-            ]
-          })
-        }
-        {
-          decorateField(<input type="password" />, 'password', {
-            rules: [
-              { required: true, message: '请输入密码！' },
-              { min: 6, message: '至少6位' },
-              { max: 12, message: '至多12位' }
-            ]
-          })
-        }
+        <KFormItem validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
+          {
+            decorateField(<input type="text" />, 'username', {
+              rules: [
+                { required: true, message: '请输入用户名！' },
+                { min: 3, message: '至少3位' },
+                { max: 6, message: '至多6位' }
+              ]
+            })
+          }
+        </KFormItem>
+        <KFormItem validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
+          {
+            decorateField(<input type="password" />, 'password', {
+              rules: [
+                { required: true, message: '请输入密码！' },
+                { min: 6, message: '至少6位' },
+                { max: 12, message: '至多12位' }
+              ]
+            })
+          }
+        </KFormItem>
+
         <button onClick={this.submit}>登录</button>
       </div>
     )
