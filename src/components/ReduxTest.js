@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { add, minus, asyncAdd } from "../store/counter.redux";
 
 @connect(
-  state => ({ num: state }),
+  state => ({ num: state.counter }),
   {
     add,
     minus,

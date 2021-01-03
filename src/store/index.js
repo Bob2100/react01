@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
-import countReducer from "./counter.redux";
+import counter from "./counter.redux";
 
-export default createStore(countReducer, applyMiddleware(logger, thunk));
+export default createStore(combineReducers({ counter }), applyMiddleware(logger, thunk));
