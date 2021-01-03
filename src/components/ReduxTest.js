@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 
-const mapStateToProps = state => ({ num: state })
-const mapDispatchToProps = dispatch => ({
-  add: () => dispatch({ type: 'add' }),
-  minus: () => dispatch({ type: 'minus' })
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  state => ({ num: state }),
+  {
+    add: () => ({ type: 'add' }),
+    minus: () => ({ type: 'minus' })
+  }
+)
 class ReduxTest extends Component {
   render() {
     return (
