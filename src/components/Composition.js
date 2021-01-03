@@ -50,6 +50,25 @@ function FilterP(props) {
   )
 }
 
+function Radio({ children, ...rest }) {
+  return (
+    <label>
+      <input type="radio" {...rest} />
+      {children}
+    </label>
+  );
+}
+
+function RadioGroup(props) {
+  return (
+    <div>
+      {React.Children.map(props.children, child => {
+        return React.cloneElement(child, { name: props.name });
+      })}
+    </div>
+  );
+}
+
 
 export default class Composition extends Component {
   render() {
@@ -68,10 +87,14 @@ export default class Composition extends Component {
           <p>React is good</p>
           <div>
             haha
-
             <p>ppp</p>
           </div>
         </FilterP>
+        <RadioGroup name="mvvm">
+          <Radio value="vue">vue</Radio>
+          <Radio value="rect">react</Radio>
+          <Radio value="angluar">angluar</Radio>
+        </RadioGroup>
       </div>
     )
   }
