@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
+import { add, minus, asyncAdd } from "../store/counter.redux";
 
 @connect(
   state => ({ num: state }),
   {
-    add: () => ({ type: 'add' }),
-    minus: () => ({ type: 'minus' }),
-    asyncAdd: () => dispatch => {
-      // 模拟异步操作
-      setTimeout(function () {
-        dispatch({
-          type: 'add'
-        });
-      }, 1000);
-    }
+    add,
+    minus,
+    asyncAdd
   }
 )
 class ReduxTest extends Component {
