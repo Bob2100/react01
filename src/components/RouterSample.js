@@ -40,6 +40,7 @@ function Detail({ match, history, location }) {
   return (
     <div>
       {match.params.course}
+      <button onClick={history.goBack}>后退</button>
     </div>
   );
 }
