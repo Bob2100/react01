@@ -18,13 +18,29 @@ function App() {
       {/* 路由配置 */}
       <Route exact path="/" component={Home}></Route>
       <Route path="/about" component={About}></Route>
+      <Route path="/detail/:course" component={Detail}></Route>
     </div>
   );
 }
 
 function Home() {
   return (
-    <div>Home</div>
+    <div>
+      <ul>
+        <li><Link to="/detail/web">Web</Link></li>
+        <li><Link to="/detail/java">Java</Link></li>
+        <li><Link to="/detail/python">python</Link></li>
+      </ul>
+    </div>
+  );
+}
+
+function Detail({ match, history, location }) {
+  console.log(match, history, location);
+  return (
+    <div>
+      {match.params.course}
+    </div>
   );
 }
 
