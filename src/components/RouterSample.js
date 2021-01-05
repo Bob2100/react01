@@ -23,7 +23,8 @@ function App() {
   );
 }
 
-function Home() {
+function Home({ location }) {
+  console.log(location.state);
   return (
     <div>
       <ul>
@@ -36,12 +37,11 @@ function Home() {
 }
 
 function Detail({ match, history, location }) {
-  console.log(match, history, location);
   return (
     <div>
       {match.params.course}
       <button onClick={history.goBack}>后退</button>
-      <button onClick={() => history.push('/')}>回到首页</button>
+      <button onClick={() => history.push({ pathname: '/', state: { foo: 'bar' } })}>回到首页</button>
     </div>
   );
 }
