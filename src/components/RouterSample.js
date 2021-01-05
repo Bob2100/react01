@@ -41,6 +41,7 @@ function Detail({ match, history, location }) {
     <div>
       {match.params.course}
       <button onClick={history.goBack}>后退</button>
+      <button onClick={() => history.push('/')}>回到首页</button>
     </div>
   );
 }
