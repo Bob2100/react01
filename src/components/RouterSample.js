@@ -19,12 +19,39 @@ function App() {
       {/* 路由配置 */}
       <Switch>
         <Route exact path="/" component={Home}></Route>
-        <Route path="/about" component={About}></Route>
+        <PrivateRoute path="/about" component={About}></PrivateRoute>
         <Route path="/detail/:course" component={Detail}></Route>
+        <Route path="/login" component={Login}></Route>
         <Route component={NoMatch}></Route>
       </Switch>
     </div>
   );
+}
+
+class Login extends Component {
+  state = {
+    isLogin: false
+  }
+  login = () => {
+    auth.login(() => {
+      this.setState({
+        isLogin: true
+      });
+    });
+  }
+
+  render() {
+    const from = this.props.location.state.from || '/';
+    if (this.state.isLogin) {
+      return <Redirect to={from} />
+    }
+    return (
+      <div>
+        <p>请登录</p>
+        <button onClick={this.login}>登录</button>
+      </div>
+    )
+  }
 }
 
 function About() {
@@ -41,6 +68,23 @@ function About() {
         <Redirect to="/about/me"></Redirect>
       </Switch>
     </div>
+  );
+}
+
+const auth = {
+  isLogin: false,
+  login(callback) {
+    this.isLogin = true;
+    console.log(this);
+    setTimeout(callback, 3000);
+  }
+}
+
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route {...rest} render={
+      props => auth.isLogin ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location.pathname } }} />
+    }></Route>
   );
 }
 
