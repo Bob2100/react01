@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom'
 
 function App() {
   return (
@@ -38,6 +38,7 @@ function About() {
       <Switch>
         <Route path="/about/me" component={() => (<div>我的信息</div>)}></Route>
         <Route path="/about/order" component={() => (<div>订单信息</div>)}></Route>
+        <Redirect to="/about/me"></Redirect>
       </Switch>
     </div>
   );
