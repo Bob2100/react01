@@ -27,6 +27,22 @@ function App() {
   );
 }
 
+function About() {
+  return (
+    <div>
+      <h2>用户中心</h2>
+      <div>
+        <Link to="/about/me">个人信息</Link>｜
+        <Link to="/about/order">订单</Link>
+      </div>
+      <Switch>
+        <Route path="/about/me" component={() => (<div>我的信息</div>)}></Route>
+        <Route path="/about/order" component={() => (<div>订单信息</div>)}></Route>
+      </Switch>
+    </div>
+  );
+}
+
 function NoMatch() {
   return (
     <div>404</div>
@@ -54,12 +70,6 @@ function Detail({ match, history, location }) {
       <button onClick={history.goBack}>后退</button>
       <button onClick={() => history.push({ pathname: '/', state: { foo: 'bar' } })}>回到首页</button>
     </div>
-  );
-}
-
-function About() {
-  return (
-    <div>About</div>
   );
 }
 
