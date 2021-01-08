@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { connect, Provider } from 'react-redux';
 import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom'
+import store from '../store';
+import { login } from '../store/user.redux'
 
 function App() {
   return (
@@ -28,27 +31,23 @@ function App() {
   );
 }
 
+@connect(
+  state => ({
+    isLogin: state.user.isLogin
+  }),
+  { login }
+)
 class Login extends Component {
-  state = {
-    isLogin: false
-  }
-  login = () => {
-    auth.login(() => {
-      this.setState({
-        isLogin: true
-      });
-    });
-  }
 
   render() {
     const from = this.props.location.state.from || '/';
-    if (this.state.isLogin) {
+    if (this.props.isLogin) {
       return <Redirect to={from} />
     }
     return (
       <div>
         <p>请登录</p>
-        <button onClick={this.login}>登录</button>
+        <button onClick={this.props.login}>登录</button>
       </div>
     )
   }
@@ -71,21 +70,20 @@ function About() {
   );
 }
 
-const auth = {
-  isLogin: false,
-  login(callback) {
-    this.isLogin = true;
-    console.log(this);
-    setTimeout(callback, 3000);
+@connect(
+  state => ({
+    isLogin: state.user.isLogin
+  })
+)
+class PrivateRoute extends Component {
+  render() {
+    const { component: Comp, ...rest } = this.props;
+    return (
+      <Route {...rest} render={
+        props => this.props.isLogin ? <Comp {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location.pathname } }} />
+      }></Route>
+    );
   }
-}
-
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route {...rest} render={
-      props => auth.isLogin ? <Component {...props} /> : <Redirect to={{ pathname: '/login', state: { from: props.location.pathname } }} />
-    }></Route>
-  );
 }
 
 function NoMatch() {
@@ -123,7 +121,9 @@ export default class RouterSample extends Component {
     return (
       <div>
         <BrowserRouter>
-          <App></App>
+          <Provider store={store}>
+            <App></App>
+          </Provider>
         </BrowserRouter>
       </div>
     )
