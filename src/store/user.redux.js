@@ -13,11 +13,16 @@ export default (state = initialState, { type, payload }) => {
   }
 }
 
+// for thunk
+// export function login() {
+//   return (dispatch) => {
+//     // 模拟异步登录
+//     setTimeout(() => {
+//       dispatch({ type: 'login' });
+//     }, 1000);
+//   }
+// }
+
 export function login() {
-  return (dispatch) => {
-    // 模拟异步登录
-    setTimeout(() => {
-      dispatch({ type: 'login' });
-    }, 1000);
-  }
+  return { type: 'login_request' }
 }
