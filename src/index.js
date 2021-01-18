@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import React from './kreact';
+import ReactDom from './kreact-dom';
 
 function Comp(props) {
   return <h2>Hi,{props.name}</h2>
