@@ -1,7 +1,7 @@
 function createElement(type, props, ...children) {
-  // console.log(arguments);
   props.children = children;
-  console.log(type, props);
+  delete props.__source;
+  delete props.__self;
   return { type, props }
 }
 
