@@ -17,11 +17,11 @@ export function initVNode(vnode) {
   }
 
   if (vtype == 2) {
-    return createClassComp();
+    return createClassComp(vnode);
   }
 
   if (vtype == 3) {
-    return createFunctionComp();
+    return createFunctionComp(vnode);
   }
 }
 
@@ -37,16 +37,18 @@ function createElement(vnode) {
     }
   });
   children.forEach(child => {
-    const childNode = initVNode(child);
-    if (childNode) {
-      node.appendChild(childNode);
-    }
+    node.appendChild(initVNode(child));
   });
   return node
 }
-function createClassComp() {
-  return null
+function createClassComp(vnode) {
+  const { type, props } = vnode;
+  const comp = new type(props);
+  const newNode = comp.render();
+  return initVNode(newNode);
 }
-function createFunctionComp() {
-  return null
+function createFunctionComp(vnode) {
+  const { type, props } = vnode;
+  const newNode = type(props);
+  return initVNode(newNode);
 }
